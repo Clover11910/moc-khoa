@@ -1,7 +1,7 @@
 // ===== SUPABASE CONFIGURATION =====
 // Bạn cần thay thế bằng thông tin từ Supabase của bạn
 const SUPABASE_URL = 'https://jjyyfeiewnfgoonlamud.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_DuAoJ5yiLPVCeAz8b5ywtg_h41gfymb';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpqeXlmZWlld25mZ29vbmxhbXVkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjkwNjIwNzIsImV4cCI6MjA4NDYzODA3Mn0.-7pwDYaXffJlHZCTr6-YLNXWoli4eeg0vkmNDt4-5TM';
 
 // Khởi tạo Supabase client
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
