@@ -1276,3 +1276,8 @@ button {
 .file-preview-item .file-remove:hover {
     background: #dc2626;
 }
+
+.logo-img {
+    height: 40px;
+    width: auto;
+}
