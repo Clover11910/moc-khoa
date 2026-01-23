@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý nội dung - Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #1e293b;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-400: #94a3b8;
+            --gray-500: #64748b;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1e293b;
+            --gray-900: #0f172a;
+            --white: #ffffff;
+            --radius: 12px;
+            --shadow: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--gray-100);
+            color: var(--gray-700);
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .admin-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 260px;
+            background: var(--gray-900);
+            color: var(--white);
+            padding: 24px 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-logo {
+            padding: 0 24px 24px;
+            border-bottom: 1px solid var(--gray-700);
+            margin-bottom: 24px;
+        }
+
+        .sidebar-logo a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--white);
+            text-decoration: none;
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .sidebar-logo i {
+            color: var(--primary);
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 24px;
+            color: var(--gray-400);
+            text-decoration: none;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-menu li a:hover,
+        .sidebar-menu li a.active {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--white);
+            border-left-color: var(--primary);
+        }
+
+        .sidebar-menu li a i {
+            width: 20px;
+        }
+
+        .menu-divider {
+            height: 1px;
+            background: var(--gray-700);
+            margin: 16px 24px;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            padding: 32px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        .page-header h1 {
+            font-size: 1.8rem;
+            color: var(--dark);
+        }
+
+        .page-header p {
+            color: var(--gray-500);
+            margin-top: 4px;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 24px;
+        }
+
+        .card-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-header h2 {
+            font-size: 1.1rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-header h2 i {
+            color: var(--primary);
+        }
+
+        .card-body {
+            padding: 24px;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.2s;
+            background: var(--white);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .form-row-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .form-row-4 {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .form-hint {
+            font-size: 0.8rem;
+            color: var(--gray-500);
+            margin-top: 6px;
+        }
+
+        /* Image Upload */
+        .image-upload {
+            border: 2px dashed var(--gray-300);
+            border-radius: 8px;
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .image-upload:hover {
+            border-color: var(--primary);
+            background: var(--gray-50);
+        }
+
+        .image-upload input {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .image-upload i {
+            font-size: 2.5rem;
+            color: var(--gray-400);
+            margin-bottom: 12px;
+        }
+
+        .image-upload p {
+            color: var(--gray-600);
+        }
+
+        .image-upload small {
+            color: var(--gray-400);
+        }
+
+        .image-preview {
+            margin-top: 16px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .image-preview img {
+            max-width: 200px;
+            max-height: 150px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .image-preview .remove-btn {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: 24px;
+            height: 24px;
+            background: var(--danger);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            font-weight: 600;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--gray-300);
+            color: var(--gray-600);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 0.85rem;
+        }
+
+        /* Table */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 14px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .data-table th {
+            background: var(--gray-50);
+            font-weight: 600;
+            color: var(--gray-600);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        .data-table tr:hover {
+            background: var(--gray-50);
+        }
+
+        .data-table img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-hot {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .badge-new {
+            background: #d1fae5;
+            color: #059669;
+        }
+
+        .badge-active {
+            background: #d1fae5;
+            color: #059669;
+        }
+
+        .badge-inactive {
+            background: #f1f5f9;
+            color: #64748b;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-icon {
+            width: 36px;
+            height: 36px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-icon.edit {
+            background: #e0e7ff;
+            color: #4f46e5;
+        }
+
+        .btn-icon.delete {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .btn-icon:hover {
+            transform: scale(1.1);
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 4px;
+            border-bottom: 2px solid var(--gray-200);
+            margin-bottom: 24px;
+        }
+
+        .tab-btn {
+            padding: 12px 24px;
+            background: none;
+            border: none;
+            font-weight: 600;
+            color: var(--gray-500);
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s;
+        }
+
+        .tab-btn:hover {
+            color: var(--primary);
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s;
+        }
+
+        .modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: var(--radius);
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            font-size: 1.2rem;
+            color: var(--dark);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--gray-400);
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 24px;
+        }
+
+        .modal-footer {
+            padding: 16px 24px;
+            border-top: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            padding: 16px 24px;
+            background: var(--dark);
+            color: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 9999;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.success {
+            background: var(--success);
+        }
+
+        .toast.error {
+            background: var(--danger);
+        }
+
+        /* Loading */
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            color: var(--gray-500);
+        }
+
+        .loading i {
+            font-size: 2rem;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 70px;
+                padding: 16px 0;
+            }
+
+            .sidebar-logo {
+                padding: 0 12px 16px;
+            }
+
+            .sidebar-logo span {
+                display: none;
+            }
+
+            .sidebar-menu li a {
+                padding: 14px;
+                justify-content: center;
+            }
+
+            .sidebar-menu li a span {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 70px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 16px;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+
+            .form-row-3,
+            .form-row-4 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <a href="index.html">
+                    <i class="fas fa-key"></i>
+                    <span>MócKhóaVN</span>
+                </a>
+            </div>
+            <ul class="sidebar-menu">
+                <li>
+                    <a href="admin.html">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>Đơn hàng</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="admin-content.html" class="active">
+                        <i class="fas fa-edit"></i>
+                        <span>Nội dung</span>
+                    </a>
+                </li>
+                <div class="menu-divider"></div>
+                <li>
+                    <a href="#" onclick="switchTab('general')">
+                        <i class="fas fa-cog"></i>
+                        <span>Cài đặt chung</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" onclick="switchTab('products')">
+                        <i class="fas fa-box"></i>
+                        <span>Sản phẩm</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" onclick="switchTab('gallery')">
+                        <i class="fas fa-images"></i>
+                        <span>Gallery</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" onclick="switchTab('testimonials')">
+                        <i class="fas fa-star"></i>
+                        <span>Đánh giá</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" onclick="switchTab('faqs')">
+                        <i class="fas fa-question-circle"></i>
+                        <span>FAQ</span>
+                    </a>
+                </li>
+                <div class="menu-divider"></div>
+                <li>
+                    <a href="index.html" target="_blank">
+                        <i class="fas fa-external-link-alt"></i>
+                        <span>Xem website</span>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="page-header">
+                <div>
+                    <h1>Quản lý nội dung</h1>
+                    <p>Chỉnh sửa giao diện và nội dung website</p>
+                </div>
+                <button class="btn btn-primary" onclick="saveAllChanges()">
+                    <i class="fas fa-save"></i> Lưu tất cả
+                </button>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="general">
+                    <i class="fas fa-cog"></i> Cài đặt chung
+                </button>
+                <button class="tab-btn" data-tab="products">
+                    <i class="fas fa-box"></i> Sản phẩm
+                </button>
+                <button class="tab-btn" data-tab="gallery">
+                    <i class="fas fa-images"></i> Gallery
+                </button>
+                <button class="tab-btn" data-tab="testimonials">
+                    <i class="fas fa-star"></i> Đánh giá
+                </button>
+                <button class="tab-btn" data-tab="faqs">
+                    <i class="fas fa-question-circle"></i> FAQ
+                </button>
+            </div>
+
+            <!-- Tab: General Settings -->
+            <div class="tab-content active" id="tab-general">
+                <!-- Brand Settings -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-store"></i> Thông tin thương hiệu</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Tên thương hiệu</label>
+                                <input type="text" id="brand_name" placeholder="VD: MócKhóaVN">
+                            </div>
+                            <div class="form-group">
+                                <label>Slogan</label>
+                                <input type="text" id="brand_slogan" placeholder="VD: Xưởng sản xuất móc khóa...">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Logo (URL)</label>
+                            <input type="text" id="brand_logo" placeholder="https://...">
+                            <p class="form-hint">Để trống nếu muốn dùng logo mặc định (icon + text)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Section -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-home"></i> Hero Section (Banner chính)</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Badge (nhãn nhỏ)</label>
+                            <input type="text" id="hero_badge" placeholder="VD: 🏭 Xưởng sản xuất trực tiếp">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Tiêu đề chính</label>
+                                <input type="text" id="hero_title" placeholder="VD: Móc Khóa In Theo Mẫu">
+                            </div>
+                            <div class="form-group">
+                                <label>Tiêu đề phụ (gradient)</label>
+                                <input type="text" id="hero_subtitle" placeholder="VD: Chất Lượng Cao - Giá Xưởng">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Mô tả</label>
+                            <textarea id="hero_description" rows="3" placeholder="Mô tả ngắn về dịch vụ..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Hình ảnh Hero</label>
+                            <input type="text" id="hero_image" placeholder="URL hình ảnh">
+                            <div class="image-preview" id="hero_image_preview"></div>
+                        </div>
+                        <div class="form-row form-row-3">
+                            <div class="form-group">
+                                <label>Số đơn hàng</label>
+                                <input type="text" id="hero_stat_orders" placeholder="VD: 5000+">
+                            </div>
+                            <div class="form-group">
+                                <label>Số khách hàng</label>
+                                <input type="text" id="hero_stat_customers" placeholder="VD: 500+">
+                            </div>
+                            <div class="form-group">
+                                <label>Đánh giá</label>
+                                <input type="text" id="hero_stat_rating" placeholder="VD: 4.9⭐">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-address-book"></i> Thông tin liên hệ</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Số điện thoại</label>
+                                <input type="text" id="contact_phone" placeholder="0987654321">
+                            </div>
+                            <div class="form-group">
+                                <label>Zalo</label>
+                                <input type="text" id="contact_zalo" placeholder="0987654321">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" id="contact_email" placeholder="contact@example.com">
+                            </div>
+                            <div class="form-group">
+                                <label>Giờ làm việc</label>
+                                <input type="text" id="contact_working_hours" placeholder="8:00 - 18:00 (T2 - T7)">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Địa chỉ</label>
+                            <input type="text" id="contact_address" placeholder="123 Đường ABC, Quận XYZ, TP.HCM">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Facebook URL</label>
+                                <input type="text" id="contact_facebook" placeholder="https://facebook.com/...">
+                            </div>
+                            <div class="form-group">
+                                <label>Instagram URL</label>
+                                <input type="text" id="contact_instagram" placeholder="https://instagram.com/...">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>TikTok URL</label>
+                                <input type="text" id="contact_tiktok" placeholder="https://tiktok.com/...">
+                            </div>
+                            <div class="form-group">
+                                <label>YouTube URL</label>
+                                <input type="text" id="contact_youtube" placeholder="https://youtube.com/...">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-success" onclick="saveGeneralSettings()">
+                    <i class="fas fa-save"></i> Lưu cài đặt chung
+                </button>
+            </div>
+
+            <!-- Tab: Products -->
+            <div class="tab-content" id="tab-products">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-box"></i> Danh sách sản phẩm</h2>
+                        <button class="btn btn-primary btn-sm" onclick="openProductModal()">
+                            <i class="fas fa-plus"></i> Thêm sản phẩm
+                        </button>
+                    </div>
+                    <div class="card-body" style="padding: 0;">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Hình ảnh</th>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Giá (100 cái)</th>
+                                    <th>Badge</th>
+                                    <th>Trạng thái</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="products-table-body">
+                                <tr>
+                                    <td colspan="6" class="loading">
+                                        <i class="fas fa-spinner"></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab: Gallery -->
+            <div class="tab-content" id="tab-gallery">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-images"></i> Gallery - Sản phẩm đã thực hiện</h2>
+                        <button class="btn btn-primary btn-sm" onclick="openGalleryModal()">
+                            <i class="fas fa-plus"></i> Thêm ảnh
+                        </button>
+                    </div>
+                    <div class="card-body" style="padding: 0;">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Hình ảnh</th>
+                                    <th>Tiêu đề</th>
+                                    <th>Trạng thái</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="gallery-table-body">
+                                <tr>
+                                    <td colspan="4" class="loading">
+                                        <i class="fas fa-spinner"></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab: Testimonials -->
+            <div class="tab-content" id="tab-testimonials">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-star"></i> Đánh giá từ khách hàng</h2>
+                        <button class="btn btn-primary btn-sm" onclick="openTestimonialModal()">
+                            <i class="fas fa-plus"></i> Thêm đánh giá
+                        </button>
+                    </div>
+                    <div class="card-body" style="padding: 0;">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Avatar</th>
+                                    <th>Khách hàng</th>
+                                    <th>Nội dung</th>
+                                    <th>Rating</th>
+                                    <th>Trạng thái</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="testimonials-table-body">
+                                <tr>
+                                    <td colspan="6" class="loading">
+                                        <i class="fas fa-spinner"></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab: FAQs -->
+            <div class="tab-content" id="tab-faqs">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-question-circle"></i> Câu hỏi thường gặp</h2>
+                        <button class="btn btn-primary btn-sm" onclick="openFaqModal()">
+                            <i class="fas fa-plus"></i> Thêm FAQ
+                        </button>
+                    </div>
+                    <div class="card-body" style="padding: 0;">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 40%">Câu hỏi</th>
+                                    <th>Câu trả lời</th>
+                                    <th>Trạng thái</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="faqs-table-body">
+                                <tr>
+                                    <td colspan="4" class="loading">
+                                        <i class="fas fa-spinner"></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Product Modal -->
+    <div class="modal" id="product-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="product-modal-title">Thêm sản phẩm</h3>
+                <button class="modal-close" onclick="closeModal('product-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="product_id">
+                <div class="form-group">
+                    <label>Tên sản phẩm *</label>
+                    <input type="text" id="product_name" placeholder="VD: Móc Khóa Mica">
+                </div>
+                <div class="form-group">
+                    <label>Mô tả ngắn</label>
+                    <textarea id="product_description" rows="2" placeholder="VD: In UV 2 mặt, độ bền cao..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>URL Hình ảnh</label>
+                    <input type="text" id="product_image" placeholder="https://...">
+                </div>
+                <div class="form-row form-row-4">
+                    <div class="form-group">
+                        <label>Giá 50-99</label>
+                        <input type="number" id="product_price_50" placeholder="12000">
+                    </div>
+                    <div class="form-group">
+                        <label>Giá 100-299</label>
+                        <input type="number" id="product_price_100" placeholder="8000">
+                    </div>
+                    <div class="form-group">
+                        <label>Giá 300-499</label>
+                        <input type="number" id="product_price_300" placeholder="6500">
+                    </div>
+                    <div class="form-group">
+                        <label>Giá 500+</label>
+                        <input type="number" id="product_price_500" placeholder="5000">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Badge</label>
+                        <select id="product_badge">
+                            <option value="">Không có</option>
+                            <option value="hot">Bán chạy</option>
+                            <option value="new">Mới</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Thứ tự hiển thị</label>
+                        <input type="number" id="product_sort" value="0">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('product-modal')">Hủy</button>
+                <button class="btn btn-primary" onclick="saveProduct()">
+                    <i class="fas fa-save"></i> Lưu
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gallery Modal -->
+    <div class="modal" id="gallery-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="gallery-modal-title">Thêm ảnh Gallery</h3>
+                <button class="modal-close" onclick="closeModal('gallery-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="gallery_id">
+                <div class="form-group">
+                    <label>Tiêu đề *</label>
+                    <input type="text" id="gallery_title" placeholder="VD: Móc khóa công ty ABC">
+                </div>
+                <div class="form-group">
+                    <label>URL Hình ảnh *</label>
+                    <input type="text" id="gallery_image" placeholder="https://...">
+                </div>
+                <div class="form-group">
+                    <label>Thứ tự hiển thị</label>
+                    <input type="number" id="gallery_sort" value="0">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('gallery-modal')">Hủy</button>
+                <button class="btn btn-primary" onclick="saveGallery()">
+                    <i class="fas fa-save"></i> Lưu
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Testimonial Modal -->
+    <div class="modal" id="testimonial-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="testimonial-modal-title">Thêm đánh giá</h3>
+                <button class="modal-close" onclick="closeModal('testimonial-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="testimonial_id">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Tên khách hàng *</label>
+                        <input type="text" id="testimonial_name" placeholder="VD: Nguyễn Văn A">
+                    </div>
+                    <div class="form-group">
+                        <label>Chức danh</label>
+                        <input type="text" id="testimonial_title" placeholder="VD: Công ty XYZ">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Avatar URL</label>
+                    <input type="text" id="testimonial_avatar" placeholder="https://...">
+                    <p class="form-hint">Có thể dùng: https://i.pravatar.cc/100?img=1 (thay số 1-70)</p>
+                </div>
+                <div class="form-group">
+                    <label>Nội dung đánh giá *</label>
+                    <textarea id="testimonial_content" rows="3" placeholder="Nội dung đánh giá..."></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Rating (1-5)</label>
+                        <select id="testimonial_rating">
+                            <option value="5">5 sao</option>
+                            <option value="4">4 sao</option>
+                            <option value="3">3 sao</option>
+                            <option value="2">2 sao</option>
+                            <option value="1">1 sao</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Thứ tự hiển thị</label>
+                        <input type="number" id="testimonial_sort" value="0">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('testimonial-modal')">Hủy</button>
+                <button class="btn btn-primary" onclick="saveTestimonial()">
+                    <i class="fas fa-save"></i> Lưu
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ Modal -->
+    <div class="modal" id="faq-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="faq-modal-title">Thêm FAQ</h3>
+                <button class="modal-close" onclick="closeModal('faq-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="faq_id">
+                <div class="form-group">
+                    <label>Câu hỏi *</label>
+                    <input type="text" id="faq_question" placeholder="VD: Đặt hàng tối thiểu bao nhiêu cái?">
+                </div>
+                <div class="form-group">
+                    <label>Câu trả lời *</label>
+                    <textarea id="faq_answer" rows="4" placeholder="Nội dung trả lời..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Thứ tự hiển thị</label>
+                    <input type="number" id="faq_sort" value="0">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('faq-modal')">Hủy</button>
+                <button class="btn btn-primary" onclick="saveFaq()">
+                    <i class="fas fa-save"></i> Lưu
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toast-message">Đã lưu thành công!</span>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase.js"></script>
+    <script src="js/admin-content.js"></script>
+</body>
+</html>
