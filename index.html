@@ -45,54 +45,56 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="container">
-            <div class="hero-content" data-aos="fade-up">
-                <span class="hero-badge">🏭 Xưởng sản xuất trực tiếp</span>
-                <h1 class="hero-title">
-                    Móc Khóa In Theo Mẫu<br>
-                    <span class="gradient-text">Chất Lượng Cao - Giá Xưởng</span>
-                </h1>
-                <p class="hero-description">
-                    Chuyên sản xuất móc khóa mica, móc khóa kim loại, móc khóa nhựa dẻo theo yêu cầu. 
-                    Nhận in logo, hình ảnh, thiết kế riêng. Đặt từ <strong>50 cái</strong>, giao hàng toàn quốc.
-                </p>
-                <div class="hero-buttons">
-                    <a href="#order" class="btn btn-primary btn-lg">
-                        <i class="fas fa-shopping-cart"></i> Đặt hàng ngay
-                    </a>
-                    <a href="#products" class="btn btn-outline btn-lg">
-                        <i class="fas fa-eye"></i> Xem sản phẩm
-                    </a>
-                </div>
-                <div class="hero-stats">
-                    <div class="stat-item">
-                        <span class="stat-number">5000+</span>
-                        <span class="stat-label">Đơn hàng</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number">500+</span>
-                        <span class="stat-label">Khách hàng</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number">4.9⭐</span>
-                        <span class="stat-label">Đánh giá</span>
-                    </div>
-                </div>
+<section class="hero" id="home">
+    <div class="container">
+        <div class="hero-content" data-aos="fade-up">
+            <!-- Thêm ID để JavaScript có thể cập nhật -->
+            <span class="hero-badge" id="heroBadge">🏭 Xưởng sản xuất trực tiếp</span>
+            <h1 class="hero-title" id="heroTitle">
+                Móc Khóa In Theo Mẫu<br>
+                <span class="gradient-text" id="heroSubtitle">Chất Lượng Cao - Giá Xưởng</span>
+            </h1>
+            <p class="hero-description" id="heroDescription">
+                Đang tải...
+            </p>
+            <div class="hero-buttons">
+                <a href="#order" class="btn btn-primary btn-lg">
+                    <i class="fas fa-shopping-cart"></i> Đặt hàng ngay
+                </a>
+                <a href="#products" class="btn btn-outline btn-lg">
+                    <i class="fas fa-eye"></i> Xem sản phẩm
+                </a>
             </div>
-            <div class="hero-image" data-aos="fade-left">
-                <img src="https://images.unsplash.com/photo-1614252369475-531eba835eb1?w=600" alt="Móc khóa mẫu">
-                <div class="floating-card card-1">
-                    <i class="fas fa-truck"></i>
-                    <span>Giao hàng toàn quốc</span>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number" id="statOrders">--</span>
+                    <span class="stat-label">Đơn hàng</span>
                 </div>
-                <div class="floating-card card-2">
-                    <i class="fas fa-medal"></i>
-                    <span>Cam kết chất lượng</span>
+                <div class="stat-item">
+                    <span class="stat-number" id="statCustomers">--</span>
+                    <span class="stat-label">Khách hàng</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="statRating">--</span>
+                    <span class="stat-label">Đánh giá</span>
                 </div>
             </div>
         </div>
-    </section>
+        <div class="hero-image" data-aos="fade-left">
+            <!-- Thêm ID cho ảnh -->
+            <img src="" alt="Móc khóa mẫu" id="heroImage">
+            <div class="floating-card card-1">
+                <i class="fas fa-truck"></i>
+                <span>Giao hàng toàn quốc</span>
+            </div>
+            <div class="floating-card card-2">
+                <i class="fas fa-medal"></i>
+                <span>Cam kết chất lượng</span>
+            </div>
+        </div>
+    </div>
+</section>
+
 
     <!-- Features -->
     <section class="features">
@@ -131,83 +133,20 @@
     </section>
 
     <!-- Products Section -->
-    <section class="products" id="products">
-        <div class="container">
-            <div class="section-header" data-aos="fade-up">
-                <span class="section-badge">Sản phẩm</span>
-                <h2 class="section-title">Các loại móc khóa</h2>
-                <p class="section-description">Đa dạng chất liệu, phù hợp mọi nhu cầu quà tặng, quảng cáo</p>
-            </div>
-            
-            <div class="products-grid">
-                <!-- Product 1 -->
-                <div class="product-card" data-aos="fade-up" data-aos-delay="0">
-                    <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1614252369475-531eba835eb1?w=400" alt="Móc khóa mica">
-                        <span class="product-badge hot">Bán chạy</span>
-                    </div>
-                    <div class="product-content">
-                        <h3 class="product-name">Móc Khóa Mica</h3>
-                        <p class="product-desc">In UV 2 mặt, độ bền cao, màu sắc tươi sáng</p>
-                        <div class="product-price">
-                            <span class="price-current">8.000đ</span>
-                            <span class="price-unit">/ cái (từ 100 cái)</span>
-                        </div>
-                        <a href="#order" class="btn btn-primary btn-block">Đặt hàng</a>
-                    </div>
-                </div>
-
-                <!-- Product 2 -->
-                <div class="product-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1622434641406-a158123450f9?w=400" alt="Móc khóa kim loại">
-                        <span class="product-badge new">Mới</span>
-                    </div>
-                    <div class="product-content">
-                        <h3 class="product-name">Móc Khóa Kim Loại</h3>
-                        <p class="product-desc">Khắc laser, sang trọng, phù hợp quà tặng cao cấp</p>
-                        <div class="product-price">
-                            <span class="price-current">25.000đ</span>
-                            <span class="price-unit">/ cái (từ 50 cái)</span>
-                        </div>
-                        <a href="#order" class="btn btn-primary btn-block">Đặt hàng</a>
-                    </div>
-                </div>
-
-                <!-- Product 3 -->
-                <div class="product-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400" alt="Móc khóa nhựa dẻo">
-                    </div>
-                    <div class="product-content">
-                        <h3 class="product-name">Móc Khóa Nhựa Dẻo (PVC)</h3>
-                        <p class="product-desc">Đúc nổi 2D/3D, dẻo dai, chống nước</p>
-                        <div class="product-price">
-                            <span class="price-current">15.000đ</span>
-                            <span class="price-unit">/ cái (từ 100 cái)</span>
-                        </div>
-                        <a href="#order" class="btn btn-primary btn-block">Đặt hàng</a>
-                    </div>
-                </div>
-
-                <!-- Product 4 -->
-                <div class="product-card" data-aos="fade-up" data-aos-delay="300">
-                    <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400" alt="Móc khóa gỗ">
-                    </div>
-                    <div class="product-content">
-                        <h3 class="product-name">Móc Khóa Gỗ</h3>
-                        <p class="product-desc">Khắc laser trên gỗ tự nhiên, thân thiện môi trường</p>
-                        <div class="product-price">
-                            <span class="price-current">12.000đ</span>
-                            <span class="price-unit">/ cái (từ 50 cái)</span>
-                        </div>
-                        <a href="#order" class="btn btn-primary btn-block">Đặt hàng</a>
-                    </div>
-                </div>
-            </div>
+<section class="products" id="products">
+    <div class="container">
+        <div class="section-header" data-aos="fade-up">
+            <span class="section-badge">Sản phẩm</span>
+            <h2 class="section-title">Các loại móc khóa</h2>
+            <p class="section-description">Đa dạng chất liệu, phù hợp mọi nhu cầu quà tặng, quảng cáo</p>
         </div>
-    </section>
+        
+        <!-- CHỈ CẦN 1 DIV TRỐNG VỚI ID -->
+        <div class="products-grid" id="productsGrid">
+            <div class="loading-placeholder">Đang tải sản phẩm...</div>
+        </div>
+    </div>
+</section>
 
     <!-- Pricing Section -->
     <section class="pricing" id="pricing">
@@ -270,289 +209,141 @@
     </section>
 
     <!-- Gallery Section -->
-    <section class="gallery" id="gallery">
-        <div class="container">
-            <div class="section-header" data-aos="fade-up">
-                <span class="section-badge">Gallery</span>
-                <h2 class="section-title">Sản phẩm đã thực hiện</h2>
-                <p class="section-description">Một số mẫu móc khóa chúng tôi đã sản xuất cho khách hàng</p>
-            </div>
-
-            <div class="gallery-grid">
-                <div class="gallery-item" data-aos="zoom-in" data-aos-delay="0">
-                    <img src="https://images.unsplash.com/photo-1614252369475-531eba835eb1?w=300" alt="Mẫu 1">
-                    <div class="gallery-overlay">
-                        <span>Móc khóa công ty ABC</span>
-                    </div>
-                </div>
-                <div class="gallery-item" data-aos="zoom-in" data-aos-delay="50">
-                    <img src="https://images.unsplash.com/photo-1622434641406-a158123450f9?w=300" alt="Mẫu 2">
-                    <div class="gallery-overlay">
-                        <span>Quà tặng sự kiện</span>
-                    </div>
-                </div>
-                <div class="gallery-item" data-aos="zoom-in" data-aos-delay="100">
-                    <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300" alt="Mẫu 3">
-                    <div class="gallery-overlay">
-                        <span>Móc khóa trường học</span>
-                    </div>
-                </div>
-                <div class="gallery-item" data-aos="zoom-in" data-aos-delay="150">
-                    <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=300" alt="Mẫu 4">
-                    <div class="gallery-overlay">
-                        <span>Móc khóa fanmade</span>
-                    </div>
-                </div>
-                <div class="gallery-item" data-aos="zoom-in" data-aos-delay="200">
-                    <img src="https://images.unsplash.com/photo-1614252369475-531eba835eb1?w=300" alt="Mẫu 5">
-                    <div class="gallery-overlay">
-                        <span>Móc khóa quán cafe</span>
-                    </div>
-                </div>
-                <div class="gallery-item" data-aos="zoom-in" data-aos-delay="250">
-                    <img src="https://images.unsplash.com/photo-1622434641406-a158123450f9?w=300" alt="Mẫu 6">
-                    <div class="gallery-overlay">
-                        <span>Móc khóa team building</span>
-                    </div>
-                </div>
-            </div>
+<section class="gallery" id="gallery">
+    <div class="container">
+        <div class="section-header" data-aos="fade-up">
+            <span class="section-badge">Gallery</span>
+            <h2 class="section-title">Sản phẩm đã thực hiện</h2>
+            <p class="section-description">Một số mẫu móc khóa chúng tôi đã sản xuất cho khách hàng</p>
         </div>
-    </section>
+        <!-- Gallery sẽ được load động -->
+        <div class="gallery-grid" id="galleryGrid">
+            <div class="loading-placeholder">Đang tải...</div>
+        </div>
+    </div>
+</section>
 
     <!-- Testimonials Section -->
-    <section class="testimonials" id="testimonials">
-        <div class="container">
-            <div class="section-header" data-aos="fade-up">
-                <span class="section-badge">Đánh giá</span>
-                <h2 class="section-title">Khách hàng nói gì?</h2>
-                <p class="section-description">Phản hồi từ những khách hàng đã sử dụng dịch vụ</p>
-            </div>
-
-            <div class="testimonials-grid">
-                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="0">
-                    <div class="testimonial-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p class="testimonial-text">"Đặt 500 móc khóa làm quà tặng cho nhân viên, chất lượng rất tốt, in sắc nét. Giao hàng đúng hẹn. Sẽ quay lại lần sau!"</p>
-                    <div class="testimonial-author">
-                        <img src="https://i.pravatar.cc/100?img=1" alt="Avatar">
-                        <div>
-                            <strong>Nguyễn Văn A</strong>
-                            <span>Công ty XYZ</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="testimonial-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p class="testimonial-text">"Mình bán móc khóa anime, đặt ở đây giá rẻ hơn nhiều chỗ khác mà chất lượng lại tốt hơn. Hỗ trợ nhiệt tình lắm!"</p>
-                    <div class="testimonial-author">
-                        <img src="https://i.pravatar.cc/100?img=5" alt="Avatar">
-                        <div>
-                            <strong>Trần Thị B</strong>
-                            <span>Shop online</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="testimonial-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                    </div>
-                    <p class="testimonial-text">"Làm móc khóa kỷ niệm cho lớp đại học, các bạn ai cũng thích. Thiết kế đẹp, giá phải chăng. Recommend!"</p>
-                    <div class="testimonial-author">
-                        <img src="https://i.pravatar.cc/100?img=3" alt="Avatar">
-                        <div>
-                            <strong>Lê Văn C</strong>
-                            <span>Sinh viên</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<section class="testimonials" id="testimonials">
+    <div class="container">
+        <div class="section-header" data-aos="fade-up">
+            <span class="section-badge">Đánh giá</span>
+            <h2 class="section-title">Khách hàng nói gì?</h2>
+            <p class="section-description">Phản hồi từ những khách hàng đã sử dụng dịch vụ</p>
         </div>
-    </section>
+        <!-- Testimonials sẽ được load động -->
+        <div class="testimonials-grid" id="testimonialsGrid">
+            <div class="loading-placeholder">Đang tải...</div>
+        </div>
+    </div>
+</section>
 
     <!-- FAQ Section -->
-    <section class="faq" id="faq">
-        <div class="container">
-            <div class="section-header" data-aos="fade-up">
-                <span class="section-badge">FAQ</span>
-                <h2 class="section-title">Câu hỏi thường gặp</h2>
-            </div>
-
-            <div class="faq-list" data-aos="fade-up">
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <span>Đặt hàng tối thiểu bao nhiêu cái?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Số lượng đặt hàng tối thiểu là 50 cái cho mỗi mẫu thiết kế. Nếu bạn cần số lượng ít hơn, vui lòng liên hệ trực tiếp để được tư vấn.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <span>Thời gian sản xuất mất bao lâu?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Thời gian sản xuất thông thường từ 3-5 ngày làm việc tùy theo số lượng và độ phức tạp của thiết kế. Đơn hàng gấp có thể làm trong 1-2 ngày (phụ thu 20%).</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <span>Tôi có thể gửi file thiết kế riêng không?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Có, bạn có thể gửi file thiết kế định dạng AI, PSD, PNG, JPG. Chúng tôi cũng hỗ trợ thiết kế miễn phí nếu bạn cung cấp ý tưởng hoặc hình ảnh tham khảo.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <span>Có được xem mẫu trước khi sản xuất không?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Có, chúng tôi sẽ gửi file preview để bạn duyệt trước khi đưa vào sản xuất. Với đơn hàng lớn, có thể làm mẫu thử (1-2 cái) với phí nhỏ.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <span>Phí vận chuyển như thế nào?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Phí vận chuyển tính theo bảng giá của đơn vị vận chuyển (GHTK, GHN, Viettel Post). Đơn hàng trên 2 triệu được miễn phí ship nội thành.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <span>Hình thức thanh toán?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Chúng tôi nhận thanh toán qua: Chuyển khoản ngân hàng, Momo, VNPay, COD (thu tiền khi nhận hàng - áp dụng với đơn dưới 1 triệu).</p>
-                    </div>
-                </div>
-            </div>
+<section class="faq" id="faq">
+    <div class="container">
+        <div class="section-header" data-aos="fade-up">
+            <span class="section-badge">FAQ</span>
+            <h2 class="section-title">Câu hỏi thường gặp</h2>
         </div>
-    </section>
+        <!-- FAQ sẽ được load động -->
+        <div class="faq-list" id="faqList" data-aos="fade-up">
+            <div class="loading-placeholder">Đang tải...</div>
+        </div>
+    </div>
+</section>
 
     <!-- Order Form Section -->
-    <section class="order-section" id="order">
-        <div class="container">
-            <div class="section-header" data-aos="fade-up">
-                <span class="section-badge">Đặt hàng</span>
-                <h2 class="section-title">Gửi yêu cầu báo giá</h2>
-                <p class="section-description">Điền thông tin bên dưới, chúng tôi sẽ liên hệ trong vòng 30 phút</p>
-            </div>
+<section class="order-section" id="order">
+    <div class="container">
+        <div class="section-header" data-aos="fade-up">
+            <span class="section-badge">Đặt hàng</span>
+            <h2 class="section-title">Gửi yêu cầu báo giá</h2>
+            <p class="section-description">Điền thông tin bên dưới, chúng tôi sẽ liên hệ trong vòng 30 phút</p>
+        </div>
 
-            <div class="order-form-wrapper" data-aos="fade-up">
-                <form id="orderForm" class="order-form">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="customerName">Họ và tên *</label>
-                            <input type="text" id="customerName" name="customerName" required placeholder="Nhập họ tên của bạn">
-                        </div>
-                        <div class="form-group">
-                            <label for="customerPhone">Số điện thoại *</label>
-                            <input type="tel" id="customerPhone" name="customerPhone" required placeholder="0xxx xxx xxx">
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="customerEmail">Email</label>
-                            <input type="email" id="customerEmail" name="customerEmail" placeholder="email@example.com">
-                        </div>
-                        <div class="form-group">
-                            <label for="productType">Loại móc khóa *</label>
-                            <select id="productType" name="productType" required>
-                                <option value="">-- Chọn loại --</option>
-                                <option value="mica">Móc khóa Mica</option>
-                                <option value="kim-loai">Móc khóa Kim loại</option>
-                                <option value="nhua-deo">Móc khóa Nhựa dẻo (PVC)</option>
-                                <option value="go">Móc khóa Gỗ</option>
-                                <option value="khac">Khác (ghi rõ ở ghi chú)</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="quantity">Số lượng dự kiến *</label>
-                            <select id="quantity" name="quantity" required>
-                                <option value="">-- Chọn số lượng --</option>
-                                <option value="50-99">50 - 99 cái</option>
-                                <option value="100-299">100 - 299 cái</option>
-                                <option value="300-499">300 - 499 cái</option>
-                                <option value="500-999">500 - 999 cái</option>
-                                <option value="1000+">Trên 1000 cái</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="size">Kích thước</label>
-                            <input type="text" id="size" name="size" placeholder="VD: 5x5cm, 4x6cm...">
-                        </div>
-                    </div>
-
+        <div class="order-form-wrapper" data-aos="fade-up">
+            <form id="orderForm" class="order-form">
+                <div class="form-row">
                     <div class="form-group">
-                        <label for="designFile">File thiết kế (nếu có)</label>
-                        <div class="file-upload">
-                            <input type="file" id="designFile" name="designFile" accept=".jpg,.jpeg,.png,.ai,.psd,.pdf">
-                            <div class="file-upload-label">
-                                <i class="fas fa-cloud-upload-alt"></i>
-                                <span>Kéo thả file hoặc click để chọn</span>
-                                <small>Hỗ trợ: JPG, PNG, AI, PSD, PDF (Max 10MB)</small>
-                            </div>
-                        </div>
-                        <div id="filePreview" class="file-preview"></div>
+                        <label for="customerName">Họ và tên *</label>
+                        <input type="text" id="customerName" name="customerName" required placeholder="Nhập họ tên của bạn">
                     </div>
-
                     <div class="form-group">
-                        <label for="notes">Ghi chú / Mô tả yêu cầu</label>
-                        <textarea id="notes" name="notes" rows="4" placeholder="Mô tả chi tiết về mẫu móc khóa bạn muốn làm..."></textarea>
+                        <label for="customerPhone">Số điện thoại *</label>
+                        <input type="tel" id="customerPhone" name="customerPhone" required placeholder="0xxx xxx xxx">
                     </div>
+                </div>
 
-                    <button type="submit" class="btn btn-primary btn-lg btn-block" id="submitBtn">
-                        <i class="fas fa-paper-plane"></i> Gửi yêu cầu báo giá
-                    </button>
-                </form>
-
-                <div class="order-contact">
-                    <p>Hoặc liên hệ trực tiếp:</p>
-                    <div class="contact-buttons">
-                        <a href="tel:0987654321" class="btn btn-outline">
-                            <i class="fas fa-phone"></i> 0987 654 321
-                        </a>
-                        <a href="https://zalo.me/0987654321" class="btn btn-zalo" target="_blank">
-                            <img src="https://page.widget.zalo.me/static/images/2.0/Logo.svg" alt="Zalo" style="height: 20px;"> Chat Zalo
-                        </a>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="customerEmail">Email</label>
+                        <input type="email" id="customerEmail" name="customerEmail" placeholder="email@example.com">
                     </div>
+                    <div class="form-group">
+                        <label for="productType">Loại móc khóa *</label>
+                        <!-- Select sẽ được load động từ database -->
+                        <select id="productType" name="productType" required>
+                            <option value="">-- Đang tải... --</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="quantity">Số lượng dự kiến *</label>
+                        <select id="quantity" name="quantity" required>
+                            <option value="">-- Chọn số lượng --</option>
+                            <option value="50-99">50 - 99 cái</option>
+                            <option value="100-299">100 - 299 cái</option>
+                            <option value="300-499">300 - 499 cái</option>
+                            <option value="500-999">500 - 999 cái</option>
+                            <option value="1000+">Trên 1000 cái</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="size">Kích thước</label>
+                        <input type="text" id="size" name="size" placeholder="VD: 5x5cm, 4x6cm...">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="designFile">File thiết kế (nếu có)</label>
+                    <div class="file-upload">
+                        <input type="file" id="designFile" name="designFile" accept=".jpg,.jpeg,.png,.ai,.psd,.pdf">
+                        <div class="file-upload-label">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <span>Kéo thả file hoặc click để chọn</span>
+                            <small>Hỗ trợ: JPG, PNG, AI, PSD, PDF (Max 10MB)</small>
+                        </div>
+                    </div>
+                    <div id="filePreview" class="file-preview"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="notes">Ghi chú / Mô tả yêu cầu</label>
+                    <textarea id="notes" name="notes" rows="4" placeholder="Mô tả chi tiết về mẫu móc khóa bạn muốn làm..."></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg btn-block" id="submitBtn">
+                    <i class="fas fa-paper-plane"></i> Gửi yêu cầu báo giá
+                </button>
+            </form>
+
+            <!-- Thông tin liên hệ nhanh - sẽ được load động -->
+            <div class="order-contact" id="orderContact">
+                <p>Hoặc liên hệ trực tiếp:</p>
+                <div class="contact-buttons">
+                    <a href="tel:0987654321" class="btn btn-outline" id="contactPhone">
+                        <i class="fas fa-phone"></i> <span>Đang tải...</span>
+                    </a>
+                    <a href="https://zalo.me/0987654321" class="btn btn-zalo" id="contactZalo" target="_blank">
+                        <img src="https://page.widget.zalo.me/static/images/2.0/Logo.svg" alt="Zalo" style="height: 20px;"> Chat Zalo
+                    </a>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- Footer -->
     <footer class="footer">
