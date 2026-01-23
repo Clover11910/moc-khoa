@@ -1,255 +1,189 @@
-// ===== INITIALIZE AOS =====
-AOS.init({
-    duration: 800,
-    easing: 'ease-out-cubic',
-    once: true,
-    offset: 50
-});
-
-// ===== MOBILE NAVIGATION =====
-const navToggle = document.getElementById('navToggle');
-const navMenu = document.getElementById('navMenu');
-
-navToggle.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
-    const icon = navToggle.querySelector('i');
-    icon.classList.toggle('fa-bars');
-    icon.classList.toggle('fa-times');
-});
-
-// Close menu when clicking a link
-document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', () => {
-        navMenu.classList.remove('active');
-        navToggle.querySelector('i').classList.add('fa-bars');
-        navToggle.querySelector('i').classList.remove('fa-times');
-    });
-});
-
-// ===== HEADER SCROLL EFFECT =====
-const header = document.getElementById('header');
-
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-        header.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
-    } else {
-        header.style.boxShadow = '0 1px 3px rgba(0,0,0,0.1)';
-    }
-});
-
-// ===== SCROLL TO TOP BUTTON =====
-const scrollTopBtn = document.getElementById('scrollTop');
-
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 500) {
-        scrollTopBtn.classList.add('show');
-    } else {
-        scrollTopBtn.classList.remove('show');
-    }
-});
-
-scrollTopBtn.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-});
-
-// ===== FAQ ACCORDION =====
-document.querySelectorAll('.faq-question').forEach(button => {
-    button.addEventListener('click', () => {
-        const faqItem = button.parentElement;
-        const isActive = faqItem.classList.contains('active');
+// ===== LOAD DYNAMIC CONTENT =====
+async function loadSiteContent() {
+    try {
+        // Load site config
+        const { data: configs } = await supabase.from('site_config').select('*');
         
-        // Close all FAQ items
-        document.querySelectorAll('.faq-item').forEach(item => {
-            item.classList.remove('active');
+        configs?.forEach(config => {
+            if (config.key === 'hero') applyHeroContent(config.value);
+            if (config.key === 'contact') applyContactContent(config.value);
+            if (config.key === 'brand') applyBrandContent(config.value);
         });
         
-        // Open clicked item if it wasn't active
-        if (!isActive) {
-            faqItem.classList.add('active');
-        }
-    });
-});
-
-// ===== FILE UPLOAD PREVIEW =====
-const fileInput = document.getElementById('designFile');
-const filePreview = document.getElementById('filePreview');
-
-if (fileInput) {
-    fileInput.addEventListener('change', (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const fileSize = (file.size / 1024 / 1024).toFixed(2);
-            
-            if (file.size > 10 * 1024 * 1024) {
-                alert('File quá lớn! Vui lòng chọn file dưới 10MB.');
-                fileInput.value = '';
-                return;
-            }
-            
-            let previewHTML = '';
-            
-            if (file.type.startsWith('image/')) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    previewHTML = `
-                        <div style="display: flex; align-items: center; gap: 12px; padding: 12px; background: #f1f5f9; border-radius: 8px;">
-                            <img src="${e.target.result}" style="max-width: 80px; max-height: 80px; border-radius: 4px;">
-                            <div>
-                                <strong>${file.name}</strong>
-                                <br><small style="color: #64748b;">${fileSize} MB</small>
-                            </div>
-                            <button type="button" onclick="clearFile()" style="margin-left: auto; background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                    `;
-                    filePreview.innerHTML = previewHTML;
-                };
-                reader.readAsDataURL(file);
-            } else {
-                previewHTML = `
-                    <div style="display: flex; align-items: center; gap: 12px; padding: 12px; background: #f1f5f9; border-radius: 8px;">
-                        <i class="fas fa-file" style="font-size: 2rem; color: #6366f1;"></i>
-                        <div>
-                            <strong>${file.name}</strong>
-                            <br><small style="color: #64748b;">${fileSize} MB</small>
-                        </div>
-                        <button type="button" onclick="clearFile()" style="margin-left: auto; background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                `;
-                filePreview.innerHTML = previewHTML;
-            }
-        }
-    });
-}
-
-function clearFile() {
-    document.getElementById('designFile').value = '';
-    document.getElementById('filePreview').innerHTML = '';
-}
-
-// ===== ORDER FORM SUBMISSION =====
-const orderForm = document.getElementById('orderForm');
-const submitBtn = document.getElementById('submitBtn');
-
-if (orderForm) {
-    orderForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
+        // Load products
+        const { data: products } = await supabase
+            .from('products')
+            .select('*')
+            .eq('is_active', true)
+            .order('sort_order');
+        if (products) renderProducts(products);
         
-        // Disable button & show loading
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang gửi...';
+        // Load gallery
+        const { data: gallery } = await supabase
+            .from('gallery')
+            .select('*')
+            .eq('is_active', true)
+            .order('sort_order');
+        if (gallery) renderGallery(gallery);
         
-        try {
-            // Get form data
-            const formData = {
-                customer_name: document.getElementById('customerName').value,
-                customer_phone: document.getElementById('customerPhone').value,
-                customer_email: document.getElementById('customerEmail').value || null,
-                product_type: document.getElementById('productType').value,
-                quantity: document.getElementById('quantity').value,
-                size: document.getElementById('size').value || null,
-                notes: document.getElementById('notes').value || null,
-                status: 'pending',
-                created_at: new Date().toISOString()
-            };
-            
-            // Upload file if exists
-            const fileInput = document.getElementById('designFile');
-            if (fileInput.files.length > 0) {
-                const uploadResult = await window.db.uploadDesignFile(fileInput.files[0]);
-                if (uploadResult.success) {
-                    formData.design_file_url = uploadResult.url;
-                }
-            }
-            
-            // Submit to Supabase
-            const result = await window.db.submitOrder(formData);
-            
-            if (result.success) {
-                // Show success modal
-                document.getElementById('successModal').classList.add('show');
-                
-                // Reset form
-                orderForm.reset();
-                filePreview.innerHTML = '';
-                
-                // Send notification (optional - you can add Telegram/Email notification here)
-                // await sendNotification(formData);
-            } else {
-                alert('Có lỗi xảy ra! Vui lòng thử lại hoặc liên hệ trực tiếp qua Zalo.');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            alert('Có lỗi xảy ra! Vui lòng thử lại.');
-        } finally {
-            // Re-enable button
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Gửi yêu cầu báo giá';
-        }
-    });
-}
-
-// ===== CLOSE MODAL =====
-function closeModal() {
-    document.getElementById('successModal').classList.remove('show');
-}
-
-// Close modal when clicking outside
-document.getElementById('successModal')?.addEventListener('click', (e) => {
-    if (e.target === e.currentTarget) {
-        closeModal();
+        // Load testimonials
+        const { data: testimonials } = await supabase
+            .from('testimonials')
+            .select('*')
+            .eq('is_active', true)
+            .order('sort_order');
+        if (testimonials) renderTestimonials(testimonials);
+        
+        // Load FAQs
+        const { data: faqs } = await supabase
+            .from('faqs')
+            .select('*')
+            .eq('is_active', true)
+            .order('sort_order');
+        if (faqs) renderFaqs(faqs);
+        
+    } catch (error) {
+        console.error('Error loading content:', error);
     }
-});
-
-// ===== SMOOTH SCROLL FOR ANCHOR LINKS =====
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-    });
-});
-
-// ===== PHONE NUMBER VALIDATION =====
-const phoneInput = document.getElementById('customerPhone');
-if (phoneInput) {
-    phoneInput.addEventListener('input', (e) => {
-        // Only allow numbers
-        e.target.value = e.target.value.replace(/[^0-9]/g, '');
-        
-        // Limit to 11 digits
-        if (e.target.value.length > 11) {
-            e.target.value = e.target.value.slice(0, 11);
-        }
-    });
 }
 
-// ===== LAZY LOAD IMAGES =====
-if ('IntersectionObserver' in window) {
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const img = entry.target;
-                if (img.dataset.src) {
-                    img.src = img.dataset.src;
-                    img.removeAttribute('data-src');
-                }
-                observer.unobserve(img);
-            }
-        });
+function applyHeroContent(hero) {
+    const badge = document.querySelector('.hero-badge');
+    const title = document.querySelector('.hero-title');
+    const desc = document.querySelector('.hero-description');
+    const img = document.querySelector('.hero-image img');
+    
+    if (badge) badge.textContent = hero.badge;
+    if (title) title.innerHTML = `${hero.title}<br><span class="gradient-text">${hero.subtitle}</span>`;
+    if (desc) desc.innerHTML = hero.description;
+    if (img) img.src = hero.image;
+    
+    // Stats
+    const stats = document.querySelectorAll('.stat-number');
+    if (stats[0]) stats[0].textContent = hero.stats?.orders || '5000+';
+    if (stats[1]) stats[1].textContent = hero.stats?.customers || '500+';
+    if (stats[2]) stats[2].textContent = hero.stats?.rating || '4.9⭐';
+}
+
+function applyContactContent(contact) {
+    // Update phone links
+    document.querySelectorAll('a[href^="tel:"]').forEach(el => {
+        el.href = `tel:${contact.phone}`;
+        if (el.textContent.includes('0')) el.textContent = contact.phone.replace(/(\d{4})(\d{3})(\d{3})/, '$1 $2 $3');
     });
     
-    document.querySelectorAll('img[data-src]').forEach(img => {
-        imageObserver.observe(img);
+    // Update Zalo links
+    document.querySelectorAll('a[href*="zalo.me"]').forEach(el => {
+        el.href = `https://zalo.me/${contact.zalo}`;
+    });
+    
+    // Update footer contact info
+    const footerContact = document.querySelector('.contact-info');
+    if (footerContact) {
+        footerContact.innerHTML = `
+            <li><i class="fas fa-map-marker-alt"></i> ${contact.address}</li>
+            <li><i class="fas fa-phone"></i> ${contact.phone}</li>
+            <li><i class="fas fa-envelope"></i> ${contact.email}</li>
+            <li><i class="fas fa-clock"></i> ${contact.working_hours}</li>
+        `;
+    }
+}
+
+function applyBrandContent(brand) {
+    document.querySelectorAll('.logo span').forEach(el => {
+        el.innerHTML = brand.name.replace(/([A-Z][a-z]+)([A-Z])/, '$1<strong>$2') + '</strong>';
     });
 }
 
-console.log('🚀 Website loaded successfully!');
+function renderProducts(products) {
+    const grid = document.querySelector('.products-grid');
+    if (!grid) return;
+    
+    grid.innerHTML = products.map(p => `
+        <div class="product-card" data-aos="fade-up">
+            <div class="product-image">
+                <img src="${p.image_url}" alt="${p.name}">
+                ${p.badge ? `<span class="product-badge ${p.badge}">${p.badge === 'hot' ? 'Bán chạy' : 'Mới'}</span>` : ''}
+            </div>
+            <div class="product-content">
+                <h3 class="product-name">${p.name}</h3>
+                <p class="product-desc">${p.description || ''}</p>
+                <div class="product-price">
+                    <span class="price-current">${formatVND(p.price_100)}</span>
+                    <span class="price-unit">/ cái (từ 100 cái)</span>
+                </div>
+                <a href="#order" class="btn btn-primary btn-block">Đặt hàng</a>
+            </div>
+        </div>
+    `).join('');
+}
+
+function renderGallery(gallery) {
+    const grid = document.querySelector('.gallery-grid');
+    if (!grid) return;
+    
+    grid.innerHTML = gallery.map(g => `
+        <div class="gallery-item" data-aos="zoom-in">
+            <img src="${g.image_url}" alt="${g.title}">
+            <div class="gallery-overlay">
+                <span>${g.title}</span>
+            </div>
+        </div>
+    `).join('');
+}
+
+function renderTestimonials(testimonials) {
+    const grid = document.querySelector('.testimonials-grid');
+    if (!grid) return;
+    
+    grid.innerHTML = testimonials.map(t => `
+        <div class="testimonial-card" data-aos="fade-up">
+            <div class="testimonial-rating">
+                ${'<i class="fas fa-star"></i>'.repeat(t.rating)}
+                ${t.rating < 5 ? '<i class="fas fa-star-half-alt"></i>'.repeat(5 - t.rating) : ''}
+            </div>
+            <p class="testimonial-text">"${t.content}"</p>
+            <div class="testimonial-author">
+                <img src="${t.avatar_url || 'https://i.pravatar.cc/100'}" alt="${t.customer_name}">
+                <div>
+                    <strong>${t.customer_name}</strong>
+                    <span>${t.customer_title || ''}</span>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function renderFaqs(faqs) {
+    const list = document.querySelector('.faq-list');
+    if (!list) return;
+    
+    list.innerHTML = faqs.map(f => `
+        <div class="faq-item">
+            <button class="faq-question">
+                <span>${f.question}</span>
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="faq-answer">
+                <p>${f.answer}</p>
+            </div>
+        </div>
+    `).join('');
+    
+    // Re-attach FAQ click handlers
+    document.querySelectorAll('.faq-question').forEach(button => {
+        button.addEventListener('click', () => {
+            const faqItem = button.parentElement;
+            const isActive = faqItem.classList.contains('active');
+            document.querySelectorAll('.faq-item').forEach(item => item.classList.remove('active'));
+            if (!isActive) faqItem.classList.add('active');
+        });
+    });
+}
+
+function formatVND(price) {
+    return new Intl.NumberFormat('vi-VN').format(price) + 'đ';
+}
+
+// Load content when DOM ready
+document.addEventListener('DOMContentLoaded', loadSiteContent);
