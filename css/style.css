@@ -1950,3 +1950,8 @@ textarea:focus-visible {
 @media (prefers-color-scheme: dark) {
     /* Có thể thêm dark mode sau nếu cần */
 }
+
+.logo-img {
+    height: 65px;
+    width: auto;
+}
