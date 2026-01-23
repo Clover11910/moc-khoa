@@ -1211,3 +1211,68 @@ button {
         flex-direction: column;
     }
 }
+
+/* Empty Message */
+.empty-message {
+    text-align: center;
+    padding: 60px 20px;
+    color: #64748b;
+    font-style: italic;
+}
+
+/* File Preview */
+.file-preview-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: #f1f5f9;
+    border-radius: 8px;
+    margin-top: 12px;
+}
+
+.file-preview-item img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.file-preview-item .file-icon {
+    font-size: 2.5rem;
+    color: #6366f1;
+    width: 60px;
+    text-align: center;
+}
+
+.file-preview-item .file-info {
+    flex: 1;
+}
+
+.file-preview-item .file-info strong {
+    display: block;
+    color: #1e293b;
+    word-break: break-all;
+}
+
+.file-preview-item .file-info small {
+    color: #64748b;
+}
+
+.file-preview-item .file-remove {
+    width: 32px;
+    height: 32px;
+    background: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.file-preview-item .file-remove:hover {
+    background: #dc2626;
+}
